@@ -55,7 +55,7 @@ public final class HotelService {
         hotelRepo.deleteById(id);
     }
 
-    public List<String> getFeedbacksByHotelId(long hotel_id) {
+    public List<FeedbackDTO> getFeedbacksByHotelId(long hotel_id) {
         final Optional<Hotel> optionalHotel = hotelRepo.findById(hotel_id);
         if (optionalHotel.isEmpty()) throw new IllegalArgumentException("No hotels found!");
 
@@ -66,6 +66,6 @@ public final class HotelService {
 
         final Hotel hotel = optionalHotel.get();
         List<FeedbackDTO> hotelFeedbacks = response.getBody();
-        return hotelFeedbacks.stream().map(FeedbackDTO::getComment).collect(Collectors.toList());
+        return hotelFeedbacks.stream().filter(element -> element.getHotel_id() == hotel_id).collect(Collectors.toList());
     }
 }

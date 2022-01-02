@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FeedbackDTO {
     private long feedback_id;
+    private long hotel_id;
     private long user_id;
     private Integer rating;
     private String comment;
