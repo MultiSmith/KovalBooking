@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-hotel
+spec:
+  selector:
+    app: service-hotel
+  type: NodePort
+  ports:
+    - name: http
+      port: 8080
+      nodePort: 31000
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-hotel
+spec:
+  selector:
+    matchLabels:
+      app: service-hotel
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: service-hotel
+    spec:
+      containers:
+        - name: server
+          image: multismith/service-hotel:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+
+---
